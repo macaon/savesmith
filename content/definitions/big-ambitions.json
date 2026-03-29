@@ -1,7 +1,7 @@
 {
   "id": "big-ambitions",
   "name": "Big Ambitions",
-  "version": 1,
+  "version": 2,
   "requires": ["format_gzip", "search_utf16le"],
   "save_format": {
     "pipeline": ["format_gzip"]
@@ -54,12 +54,124 @@
       "category": "Player"
     },
     {
+      "id": "market_price_multiplier",
+      "name": "Market Price Multiplier",
+      "type": "float32",
+      "widget": "spin",
+      "min": 0.01,
+      "max": 10,
+      "step": 0.1,
+      "search": {"method": "search_utf16le", "field_name": "marketPriceMultiplier"},
+      "category": "Economy"
+    },
+    {
+      "id": "employee_salary_multiplier",
+      "name": "Employee Salary Multiplier",
+      "type": "float32",
+      "widget": "spin",
+      "min": 0.01,
+      "max": 10,
+      "step": 0.1,
+      "search": {"method": "search_utf16le", "field_name": "employeeHourlySalaryMultiplier"},
+      "category": "Economy"
+    },
+    {
+      "id": "bank_interest_multiplier",
+      "name": "Bank Interest Multiplier",
+      "type": "float32",
+      "widget": "spin",
+      "min": 0.01,
+      "max": 10,
+      "step": 0.1,
+      "search": {"method": "search_utf16le", "field_name": "bankInterestMultiplier"},
+      "category": "Economy"
+    },
+    {
+      "id": "bank_interest_rate",
+      "name": "Bank Interest Rate",
+      "type": "float32",
+      "widget": "spin",
+      "min": -1,
+      "max": 1,
+      "step": 0.01,
+      "search": {"method": "search_utf16le", "field_name": "bankInterestRate"},
+      "category": "Economy"
+    },
+    {
+      "id": "wholesale_urgent_fee_multiplier",
+      "name": "Wholesale Urgent Fee Multiplier",
+      "type": "float32",
+      "widget": "spin",
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "search": {"method": "search_utf16le", "field_name": "wholesaleUrgentFeeMultiplier"},
+      "category": "Economy"
+    },
+    {
+      "id": "importer_urgent_fee_multiplier",
+      "name": "Importer Urgent Fee Multiplier",
+      "type": "float32",
+      "widget": "spin",
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "search": {"method": "search_utf16le", "field_name": "importerUrgentFeeMultiplier"},
+      "category": "Economy"
+    },
+    {
+      "id": "customer_promotion_multiplier",
+      "name": "Customer Promotion Multiplier",
+      "type": "float32",
+      "widget": "spin",
+      "min": 0.01,
+      "max": 10,
+      "step": 0.1,
+      "search": {"method": "search_utf16le", "field_name": "baseCustomerPromotionMultiplier"},
+      "category": "Economy"
+    },
+    {
+      "id": "rivals_difficulty_multiplier",
+      "name": "Rivals Difficulty Multiplier",
+      "type": "float32",
+      "widget": "spin",
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "search": {"method": "search_utf16le", "field_name": "rivalsDifficultyMultiplier"},
+      "category": "Difficulty"
+    },
+    {
+      "id": "disable_aging",
+      "name": "Disable Aging",
+      "type": "bool",
+      "widget": "switch",
+      "search": {"method": "search_utf16le", "field_name": "disableAging"},
+      "category": "Toggles"
+    },
+    {
+      "id": "disable_energy",
+      "name": "Disable Energy Drain",
+      "type": "bool",
+      "widget": "switch",
+      "search": {"method": "search_utf16le", "field_name": "disableEnergy"},
+      "category": "Toggles"
+    },
+    {
+      "id": "disable_happiness",
+      "name": "Disable Happiness Drain",
+      "type": "bool",
+      "widget": "switch",
+      "search": {"method": "search_utf16le", "field_name": "disableHappiness"},
+      "category": "Toggles"
+    },
+    {
       "id": "disable_vehicle_damage",
       "name": "Disable Vehicle Damage",
       "type": "bool",
       "widget": "switch",
       "search": {"method": "search_utf16le", "field_name": "disableVehicleDamage"},
-      "category": "Settings"
+      "category": "Toggles"
     },
     {
       "id": "disable_vehicle_fuel",
@@ -67,7 +179,15 @@
       "type": "bool",
       "widget": "switch",
       "search": {"method": "search_utf16le", "field_name": "disableVehicleFuel"},
-      "category": "Settings"
+      "category": "Toggles"
+    },
+    {
+      "id": "disable_wholesale_import_limits",
+      "name": "Disable Wholesale/Import Limits",
+      "type": "bool",
+      "widget": "switch",
+      "search": {"method": "search_utf16le", "field_name": "disableWholesaleAndImportLimits"},
+      "category": "Toggles"
     }
   ]
 }

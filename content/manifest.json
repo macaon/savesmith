@@ -1,7 +1,7 @@
 {
   "files": {
     "definitions/big-ambitions.json": {
-      "sha256": "12421700e3a5d996229fffe0d7cff110e75e1e1f2d9b55002aab03ff68fa319b",
+      "sha256": "b62e829151d75e4c361d1467242c64579866e0be430b724eb1fd777564d44b8d",
       "type": "definition"
     },
     "plugins/format_gzip.py": {
