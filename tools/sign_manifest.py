@@ -10,11 +10,7 @@ import json
 import sys
 from pathlib import Path
 
-from cryptography.hazmat.primitives.serialization import (
-    Encoding,
-    load_pem_private_key,
-    PrivateFormat,
-)
+from cryptography.hazmat.primitives.serialization import load_pem_private_key
 
 REPO_ROOT = Path(__file__).parent.parent
 CONTENT_DIR = REPO_ROOT / "content"

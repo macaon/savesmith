@@ -124,7 +124,9 @@ class SaveEditorPage(Adw.NavigationPage):
             save_file = SaveFile(self._save_path, format_plugins)
             save_file.load()
 
-            self._editor = SaveEditor(save_file, self._definition, loader.search_plugins)
+            self._editor = SaveEditor(
+                save_file, self._definition, loader.search_plugins
+            )
             field_values = self._editor.read_fields()
 
             self._build_editor_ui(field_values)

@@ -5,10 +5,10 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
-from urllib.request import urlopen, Request
 from urllib.error import URLError
+from urllib.request import Request, urlopen
 
-from savesmith.core.signing import sha256_bytes, verify_manifest, verify_file_hash
+from savesmith.core.signing import sha256_bytes, verify_file_hash, verify_manifest
 
 log = logging.getLogger(__name__)
 
@@ -121,7 +121,7 @@ class Downloader:
         return True
 
     def _needs_update(self, rel_path: str, file_info: dict) -> bool:
-        """Check if a local file is missing or has a different hash than the manifest."""
+        """Check if a local file needs updating."""
         local_path = self._data_dir / rel_path
         if not local_path.exists():
             return True
@@ -130,9 +130,10 @@ class Downloader:
     @staticmethod
     def _fetch(url: str) -> bytes:
         """Fetch raw bytes from a URL."""
-        req = Request(url, headers={"User-Agent": "SaveSmith/0.1"})
+        headers = {"User-Agent": "SaveSmith/0.1"}
+        req = Request(url, headers=headers)  # noqa: S310
         try:
-            with urlopen(req, timeout=15) as resp:
+            with urlopen(req, timeout=15) as resp:  # noqa: S310 # nosec B310
                 return resp.read()
         except URLError as e:
             raise DownloadError(str(e)) from e

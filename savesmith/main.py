@@ -97,7 +97,7 @@ class SaveSmithApplication(Adw.Application):
                         </child>
                         <child>
                           <object class="GtkShortcutsShortcut">
-                            <property name="accelerator">&lt;Control&gt;question</property>
+                            <property name="accelerator">&lt;Ctrl&gt;question</property>
                             <property name="title">Keyboard Shortcuts</property>
                           </object>
                         </child>

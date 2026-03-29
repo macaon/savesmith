@@ -43,7 +43,9 @@ def main():
     print(f"Private key written to {private_path}")
 
     # Save public key
-    public_pem = public_key.public_bytes(Encoding.PEM, PublicFormat.SubjectPublicKeyInfo)
+    public_pem = public_key.public_bytes(
+        Encoding.PEM, PublicFormat.SubjectPublicKeyInfo
+    )
     public_path.write_bytes(public_pem)
     print(f"Public key written to {public_path}")
 
