@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=SaveSmith
+Comment=A modular save game editor
+Exec=savesmith
+Icon=io.github.savesmith
+Terminal=false
+Type=Application
+Categories=Game;Utility;
+Keywords=save;editor;cheat;trainer;
+StartupNotify=true

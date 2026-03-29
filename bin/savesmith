@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+"""SaveSmith launcher."""
+
+import sys
+import os
+
+# When running from the source tree (not installed), add the repo root
+# to sys.path so `import savesmith` works without installation.
+_src = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
+if os.path.isfile(os.path.join(_src, "savesmith", "main.py")):
+    sys.path.insert(0, _src)
+
+from savesmith.main import main  # noqa: E402
+
+main()

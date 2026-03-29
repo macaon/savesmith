@@ -1,0 +1,14 @@
+[project]
+name = "savesmith"
+version = "0.1.0"
+description = "A modular save game editor for Linux"
+license = {text = "GPL-3.0-or-later"}
+requires-python = ">=3.11"
+dependencies = [
+    "PyGObject",
+    "cryptography",
+]
+
+[build-system]
+requires = ["meson-python"]
+build-backend = "mesonpy"

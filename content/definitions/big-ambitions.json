@@ -1,0 +1,73 @@
+{
+  "id": "big-ambitions",
+  "name": "Big Ambitions",
+  "version": 1,
+  "requires": ["format_gzip", "search_utf16le"],
+  "save_format": {
+    "pipeline": ["format_gzip"]
+  },
+  "save_glob": "**/*.hsg",
+  "meta_glob": "**/*.hsg.meta",
+  "fields": [
+    {
+      "id": "money",
+      "name": "Money",
+      "type": "float32",
+      "widget": "spin",
+      "min": 0,
+      "max": 999999999,
+      "step": 1000,
+      "search": {"method": "search_utf16le", "field_name": "Money"},
+      "category": "Player"
+    },
+    {
+      "id": "energy",
+      "name": "Energy",
+      "type": "float32",
+      "widget": "spin",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "search": {"method": "search_utf16le", "field_name": "Energy"},
+      "category": "Player"
+    },
+    {
+      "id": "hunger",
+      "name": "Hunger",
+      "type": "float32",
+      "widget": "spin",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "search": {"method": "search_utf16le", "field_name": "Hunger"},
+      "category": "Player"
+    },
+    {
+      "id": "happiness",
+      "name": "Happiness",
+      "type": "float32",
+      "widget": "spin",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "search": {"method": "search_utf16le", "field_name": "Happiness"},
+      "category": "Player"
+    },
+    {
+      "id": "disable_vehicle_damage",
+      "name": "Disable Vehicle Damage",
+      "type": "bool",
+      "widget": "switch",
+      "search": {"method": "search_utf16le", "field_name": "disableVehicleDamage"},
+      "category": "Settings"
+    },
+    {
+      "id": "disable_vehicle_fuel",
+      "name": "Disable Vehicle Fuel",
+      "type": "bool",
+      "widget": "switch",
+      "search": {"method": "search_utf16le", "field_name": "disableVehicleFuel"},
+      "category": "Settings"
+    }
+  ]
+}

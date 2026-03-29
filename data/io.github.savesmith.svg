@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3584e4"/>
+      <stop offset="1" stop-color="#1a5fb4"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="128" height="128" rx="16" fill="url(#bg)"/>
+  <!-- Floppy disk body -->
+  <rect x="28" y="24" width="72" height="80" rx="4" fill="#ffffff" opacity="0.95"/>
+  <!-- Floppy disk label area -->
+  <rect x="38" y="54" width="52" height="40" rx="2" fill="#deddda"/>
+  <!-- Floppy disk metal slider -->
+  <rect x="46" y="28" width="36" height="20" rx="2" fill="#c0bfbc"/>
+  <rect x="56" y="28" width="16" height="20" rx="1" fill="#9a9996"/>
+  <!-- Anvil / hammer symbol on the label -->
+  <path d="M52 68 L64 58 L76 68 L72 68 L72 82 L56 82 L56 68 Z" fill="#1a5fb4" opacity="0.7"/>
+</svg>

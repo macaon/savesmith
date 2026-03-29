@@ -1,0 +1,66 @@
+{
+  "app-id": "io.github.savesmith",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "49",
+  "sdk": "org.gnome.Sdk",
+  "command": "savesmith",
+  "finish-args": [
+    "--share=network",
+    "--share=ipc",
+    "--socket=wayland",
+    "--socket=x11",
+    "--device=dri",
+    "--filesystem=home",
+    "--filesystem=xdg-data/savesmith:create"
+  ],
+  "build-options": {
+    "env": {
+      "PIP_DISABLE_PIP_VERSION_CHECK": "1"
+    }
+  },
+  "modules": [
+    {
+      "name": "python3-cffi",
+      "buildsystem": "simple",
+      "build-commands": [
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"cffi\" --no-build-isolation"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "url": "https://files.pythonhosted.org/packages/0c/c3/44f3fbbfa403ea2a7c779186dc20772604442dde72947e7d01069cbe98e3/pycparser-3.0-py3-none-any.whl",
+          "sha256": "b727414169a36b7d524c1c3e31839a521725078d7b2ff038656844266160a992"
+        },
+        {
+          "type": "file",
+          "url": "https://files.pythonhosted.org/packages/98/df/0a1755e750013a2081e863e7cd37e0cdd02664372c754e5560099eb7aa44/cffi-2.0.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+          "sha256": "c8d3b5532fc71b7a77c09192b4a5a200ea992702734a2e9279a37f2478236f26"
+        }
+      ]
+    },
+    {
+      "name": "python3-cryptography",
+      "buildsystem": "simple",
+      "build-commands": [
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"cryptography\" --no-build-isolation"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "url": "https://files.pythonhosted.org/packages/63/e7/471ab61099a3920b0c77852ea3f0ea611c9702f651600397ac567848b897/cryptography-46.0.5-cp311-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+          "sha256": "4d7e3d356b8cd4ea5aff04f129d5f66ebdc7b6f8eae802b93739ed520c47c79b"
+        }
+      ]
+    },
+    {
+      "name": "savesmith",
+      "buildsystem": "meson",
+      "sources": [
+        {
+          "type": "dir",
+          "path": ".."
+        }
+      ]
+    }
+  ]
+}

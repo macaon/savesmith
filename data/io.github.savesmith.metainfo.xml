@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.savesmith</id>
+  <name>SaveSmith</name>
+  <summary>A modular save game editor</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <description>
+    <p>
+      SaveSmith is a modular save game editor for Linux. Game support is provided
+      through downloadable definition files and plugins, allowing new games to be
+      supported without updating the application.
+    </p>
+  </description>
+  <url type="homepage">https://github.com/macaon/savesmith</url>
+  <url type="bugtracker">https://github.com/macaon/savesmith/issues</url>
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="0.1.0" date="2026-03-29">
+      <description>
+        <p>Initial release.</p>
+      </description>
+    </release>
+  </releases>
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+  </supports>
+</component>

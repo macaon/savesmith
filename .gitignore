@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+build/
+.flatpak-builder/
+*.flatpak
+.builddir/
+keys/
+!keys/.gitkeep

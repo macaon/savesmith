@@ -1,0 +1,17 @@
+{
+  "files": {
+    "definitions/big-ambitions.json": {
+      "sha256": "12421700e3a5d996229fffe0d7cff110e75e1e1f2d9b55002aab03ff68fa319b",
+      "type": "definition"
+    },
+    "plugins/format_gzip.py": {
+      "sha256": "92f652a50a620090085c84dc97288c7e299ff978b38902b8978aa0d1bb82edeb",
+      "type": "plugin"
+    },
+    "plugins/search_utf16le.py": {
+      "sha256": "81043acd5f21043dfd02c5a83e93188e36aadc1ab0edad2a48f99f08cda6cab7",
+      "type": "plugin"
+    }
+  },
+  "version": 1
+}
