@@ -8,7 +8,7 @@ from pathlib import Path
 from urllib.request import urlopen, Request
 from urllib.error import URLError
 
-from savesmith.core.signing import verify_manifest, verify_file_hash
+from savesmith.core.signing import sha256_bytes, verify_manifest, verify_file_hash
 
 log = logging.getLogger(__name__)
 
@@ -109,10 +109,9 @@ class Downloader:
         all_plugins = {p["path"]: p for p in self.list_plugins()}
 
         for req_id in requires:
-            # Find the plugin file matching this id
             plugin_path = f"plugins/{req_id}.py"
             if plugin_path in all_plugins:
-                if not (self._data_dir / plugin_path).exists():
+                if self._needs_update(plugin_path, all_plugins[plugin_path]):
                     if not self.download_file(plugin_path):
                         log.error("Failed to download required plugin: %s", req_id)
                         return False
@@ -120,6 +119,13 @@ class Downloader:
                 log.warning("Required plugin %s not found in manifest", req_id)
 
         return True
+
+    def _needs_update(self, rel_path: str, file_info: dict) -> bool:
+        """Check if a local file is missing or has a different hash than the manifest."""
+        local_path = self._data_dir / rel_path
+        if not local_path.exists():
+            return True
+        return sha256_bytes(local_path.read_bytes()) != file_info.get("sha256", "")
 
     @staticmethod
     def _fetch(url: str) -> bytes:
