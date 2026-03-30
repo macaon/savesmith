@@ -1,12 +1,14 @@
 {
   "id": "ftl-trainer",
-  "name": "FTL: Faster Than Light (Trainer)",
+  "name": "FTL: Faster Than Light",
   "version": 1,
   "mode": "trainer",
   "requires": ["memory_pointer_chain"],
   "process_name": "FTL.amd64",
+  "game_version": "1.6.29",
+  "steam_buildid": "4710954",
   "poll_interval_ms": 250,
-  "description": "Trainer for FTL: Faster Than Light (Linux native). Pointer chains follow: [0x63A7F8] = ShipStatus/CommandGui*, +0x10 = ShipManager*. Resource fields use freeze-on-enable to maintain values every poll tick. Power uses code patches since the PowerManager has clean single-path functions.",
+  "description": "Trainer for FTL: Faster Than Light (Linux native, v1.6.29). Pointer chains follow: [0x63A7F8] = ShipStatus/CommandGui*, +0x10 = ShipManager*. Resource fields use freeze-on-enable to maintain values every poll tick. Power uses code patches since the PowerManager has clean single-path functions.",
   "fields": [
     {
       "id": "infinite_fuel",

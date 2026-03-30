@@ -151,6 +151,8 @@ class TrainerFieldDef:
     on_enable: PatchAction | None = None  # Writes to run when patch enabled
     on_enable_alt: PatchAction | None = None  # Additional writes (null-safe)
     freeze_on_enable: bool = False  # Repeat on_enable writes every poll tick
+    on_enable_lua: str = ""  # Lua code to execute when enabled
+    on_disable_lua: str = ""  # Lua code to execute when disabled
 
 
 @dataclass(frozen=True)
@@ -164,6 +166,7 @@ class TrainerDefinition:
     process_name: str
     fields: tuple[TrainerFieldDef, ...]
     poll_interval_ms: int = 500
+    game_version: str = ""
 
     @staticmethod
     def from_json(data: dict) -> TrainerDefinition:
@@ -268,6 +271,8 @@ class TrainerDefinition:
                     on_enable=on_enable,
                     on_enable_alt=on_enable_alt,
                     freeze_on_enable=f.get("freeze_on_enable", False),
+                    on_enable_lua=f.get("on_enable_lua", ""),
+                    on_disable_lua=f.get("on_disable_lua", ""),
                 )
             )
 
@@ -278,6 +283,7 @@ class TrainerDefinition:
             requires=tuple(data.get("requires", [])),
             process_name=data["process_name"],
             poll_interval_ms=data.get("poll_interval_ms", 500),
+            game_version=data.get("game_version", ""),
             fields=tuple(fields),
         )
 

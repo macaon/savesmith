@@ -20,6 +20,7 @@ ignore = ["E402"]  # GTK apps must call gi.require_version before imports
 "tools/*" = ["S"]  # Dev tools don't need security hardening
 "savesmith/core/process.py" = ["S603", "S607"]  # flatpak-spawn host portal
 "savesmith/core/memory.py" = ["S603", "S607"]  # flatpak-spawn host helper
+"content/plugins/lua_inject.py" = ["S603", "S607"]  # GDB + flatpak-spawn
 
 [build-system]
 requires = ["meson-python"]

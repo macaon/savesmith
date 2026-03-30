@@ -268,11 +268,11 @@ class GameBrowserPage(Adw.NavigationPage):
         is_trainer = isinstance(defn, TrainerDefinition)
         mode = "trainer" if is_trainer else "save"
 
-        subtitle = (
-            f"{len(defn.fields)} fields"
-            if is_trainer
-            else f"{len(defn.fields)} editable fields"
-        )
+        parts = []
+        if is_trainer and hasattr(defn, "game_version") and defn.game_version:
+            parts.append(f"v{defn.game_version}")
+        parts.append(f"+{len(defn.fields)}")
+        subtitle = " · ".join(parts)
 
         row = Adw.ActionRow(
             title=defn.name,

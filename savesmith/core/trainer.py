@@ -54,6 +54,7 @@ class TrainerEditor:
         self._mem = ProcessMemory(pid)
         self._field_values: list[TrainerFieldValue] = []
         self._module_bases: dict[str, int] = {}
+        self._lua_plugin: object | None = None
         self._attached = False
 
     @property
@@ -74,6 +75,20 @@ class TrainerEditor:
             self._pid,
             len(self._module_bases),
         )
+
+        # Initialize Lua injection if any field needs it
+        needs_lua = any(
+            f.on_enable_lua or f.on_disable_lua
+            for f in self._definition.fields
+        )
+        if needs_lua:
+            lua = self._memory_plugins.get("lua_inject")
+            if lua and hasattr(lua, "attach"):
+                if lua.attach(self._pid, self._mem, self._module_bases):
+                    self._lua_plugin = lua
+                    log.info("Lua injection initialized")
+                else:
+                    log.warning("Lua injection not available")
 
     def _resolve_base(self, module: str) -> int:
         """Resolve a module name to its base address."""
@@ -145,18 +160,26 @@ class TrainerEditor:
 
     def _read_patch_field(self, field_def: TrainerFieldDef) -> None:
         """Add a patch field, checking if patches are currently active."""
-        if not field_def.patches and not field_def.freeze_on_enable:
+        has_patches = bool(field_def.patches)
+        has_freeze = field_def.freeze_on_enable
+        has_lua = bool(field_def.on_enable_lua)
+
+        if not has_patches and not has_freeze and not has_lua:
             return
 
-        module = (
-            field_def.address.module
-            if field_def.address
-            else self._definition.process_name
-        )
-        base = self._resolve_base(module)
-        if base == 0:
+        base = 0
+        if field_def.address:
+            module = field_def.address.module
+            base = self._resolve_base(module)
+        elif has_patches:
+            base = self._resolve_base(
+                self._definition.process_name
+            )
+
+        if has_patches and base == 0:
             log.warning(
-                "Module not found for patch field %s", field_def.id
+                "Module not found for patch field %s",
+                field_def.id,
             )
             return
 
@@ -262,6 +285,16 @@ class TrainerEditor:
                             "on_enable_alt skipped for %s (null ptr)",
                             field_id,
                         )
+
+                # Run Lua code
+                if self._lua_plugin:
+                    lua_code = (
+                        fv.field.on_enable_lua
+                        if enable
+                        else fv.field.on_disable_lua
+                    )
+                    if lua_code:
+                        self._lua_plugin.execute(lua_code)
 
                 fv.current_value = enable
                 log.info(

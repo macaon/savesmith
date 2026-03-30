@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import re
 import subprocess
 from dataclasses import dataclass
@@ -118,12 +119,17 @@ def _find_processes_native(name: str) -> list[ProcessInfo]:
     """Direct /proc scan for non-sandboxed environments."""
     results: list[ProcessInfo] = []
     needle = name.lower()
+    own_pid = str(os.getpid())
 
     for entry in Path("/proc").iterdir():
         if not entry.name.isdigit():
             continue
+        if entry.name == own_pid:
+            continue
         try:
             comm = (entry / "comm").read_text().strip()
+            if comm in ("python3", "bash", "sh", "flatpak-spawn"):
+                continue
             cmdline = (
                 (entry / "cmdline")
                 .read_bytes()

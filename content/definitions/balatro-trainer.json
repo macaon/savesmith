@@ -1,0 +1,24 @@
+{
+  "id": "balatro-trainer",
+  "name": "Balatro",
+  "version": 1,
+  "mode": "trainer",
+  "requires": ["lua_inject"],
+  "process_name": "Balatro.exe",
+  "game_version": "1.0.1o",
+  "steam_buildid": "17459173",
+  "poll_interval_ms": 500,
+  "description": "Trainer for Balatro (Proton, v1.0.1o). Uses Lua injection to execute code in the game's LuaJIT VM. The on_enable_lua hooks into love.update to continuously enforce values. on_disable_lua removes the hook.",
+  "fields": [
+    {
+      "id": "infinite_money",
+      "name": "Infinite Money",
+      "type": "patch",
+      "widget": "switch",
+      "category": "Resources",
+      "description": "Sets money to 999 and hooks love.update to maintain it every frame.",
+      "on_enable_lua": "G.GAME.dollars = 999; if not _ss then _ss = {} end; _ss.dollars = true; if not _ss.patched then _ss.patched = true; local _u = love.update; love.update = function(dt) if _ss.dollars then G.GAME.dollars = 999 end; return _u(dt) end end",
+      "on_disable_lua": "if _ss then _ss.dollars = false end"
+    }
+  ]
+}
