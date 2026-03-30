@@ -68,7 +68,7 @@ class SaveSmithApplication(Adw.Application):
             website="https://github.com/macaon/savesmith",
             issue_url="https://github.com/macaon/savesmith/issues",
             license_type=Gtk.License.GPL_3_0,
-            comments="A modular save game editor for Linux.",
+            comments="A modular save game editor and trainer for Linux.",
         )
         about.present(self.props.active_window)
 
