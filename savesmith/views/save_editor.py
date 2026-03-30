@@ -73,7 +73,7 @@ class SaveEditorPage(Adw.NavigationPage):
 
         # Loading state
         loading = Adw.StatusPage(title="Loading save...")
-        spinner = Gtk.Spinner(spinning=True, halign=Gtk.Align.CENTER)
+        spinner = Adw.Spinner(halign=Gtk.Align.CENTER)
         loading.set_child(spinner)
         self._stack.add_named(loading, "loading")
 

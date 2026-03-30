@@ -1,8 +1,10 @@
 views_sources = [
   '__init__.py',
   'game_browser.py',
+  'process_picker.py',
   'save_browser.py',
   'save_editor.py',
+  'trainer_editor.py',
 ]
 
 python.install_sources(

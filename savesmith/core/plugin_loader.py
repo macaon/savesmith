@@ -18,7 +18,7 @@ class PluginInfo:
     """Metadata about a loaded plugin."""
 
     id: str
-    type: str  # "format" or "search"
+    type: str  # "format", "search", or "memory"
     instance: object
 
 
@@ -30,6 +30,7 @@ class PluginLoader:
         self._manifest_path = data_dir / "manifest.json"
         self._format_plugins: dict[str, object] = {}
         self._search_plugins: dict[str, object] = {}
+        self._memory_plugins: dict[str, object] = {}
 
     @property
     def format_plugins(self) -> dict[str, object]:
@@ -38,6 +39,10 @@ class PluginLoader:
     @property
     def search_plugins(self) -> dict[str, object]:
         return dict(self._search_plugins)
+
+    @property
+    def memory_plugins(self) -> dict[str, object]:
+        return dict(self._memory_plugins)
 
     def load_all(self) -> None:
         """Scan plugins dir, verify hashes, and load all valid plugins."""
@@ -116,6 +121,8 @@ class PluginLoader:
                 self._format_plugins[plugin_id] = instance
             elif plugin_type == "search":
                 self._search_plugins[plugin_id] = instance
+            elif plugin_type == "memory":
+                self._memory_plugins[plugin_id] = instance
             else:
                 log.warning("Unknown plugin type %r in %s", plugin_type, path.name)
                 return
@@ -130,7 +137,11 @@ class PluginLoader:
 
         Returns (all_met, list_of_missing_ids).
         """
-        all_loaded = {**self._format_plugins, **self._search_plugins}
+        all_loaded = {
+            **self._format_plugins,
+            **self._search_plugins,
+            **self._memory_plugins,
+        }
         missing = [r for r in requires if r not in all_loaded]
         return len(missing) == 0, missing
 
@@ -139,3 +150,6 @@ class PluginLoader:
 
     def get_search(self, plugin_id: str) -> object | None:
         return self._search_plugins.get(plugin_id)
+
+    def get_memory(self, plugin_id: str) -> object | None:
+        return self._memory_plugins.get(plugin_id)

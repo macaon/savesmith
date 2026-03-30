@@ -117,7 +117,10 @@ class SaveSmithApplication(Adw.Application):
 
 def main():
     app = SaveSmithApplication()
-    sys.exit(app.run(sys.argv))
+    try:
+        sys.exit(app.run(sys.argv))
+    except KeyboardInterrupt:
+        sys.exit(0)
 
 
 if __name__ == "__main__":

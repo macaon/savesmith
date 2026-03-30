@@ -11,7 +11,10 @@
     "--socket=x11",
     "--device=dri",
     "--filesystem=home",
-    "--filesystem=xdg-data/savesmith:create"
+    "--filesystem=xdg-data/savesmith:create",
+    "--filesystem=/proc:ro",
+    "--allow=devel",
+    "--talk-name=org.freedesktop.Flatpak"
   ],
   "build-options": {
     "env": {

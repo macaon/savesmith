@@ -3,9 +3,12 @@ core_sources = [
   'definition.py',
   'downloader.py',
   'editor.py',
+  'memory.py',
   'plugin_loader.py',
+  'process.py',
   'save_file.py',
   'signing.py',
+  'trainer.py',
 ]
 
 python.install_sources(

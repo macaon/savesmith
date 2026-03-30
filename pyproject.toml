@@ -18,6 +18,8 @@ ignore = ["E402"]  # GTK apps must call gi.require_version before imports
 
 [tool.ruff.lint.per-file-ignores]
 "tools/*" = ["S"]  # Dev tools don't need security hardening
+"savesmith/core/process.py" = ["S603", "S607"]  # flatpak-spawn host portal
+"savesmith/core/memory.py" = ["S603", "S607"]  # flatpak-spawn host helper
 
 [build-system]
 requires = ["meson-python"]
