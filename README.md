@@ -2,7 +2,7 @@
 
 A modular save game editor and trainer for Linux, built with GTK4 and libadwaita.
 
-SaveSmith is a pure engine — all game-specific knowledge lives in downloadable definition files and plugins, so new games can be supported without updating the application.
+SaveSmith is a pure engine — all game-specific knowledge lives in definition files and plugins, so new games can be supported without updating the application.
 
 ## Features
 
@@ -26,10 +26,10 @@ Trainers work both natively and inside the Flatpak sandbox via the `org.freedesk
 | Game | Mode | Cheats |
 |------|------|--------|
 | Big Ambitions | Save Editor | Money, Energy, Hunger, Happiness, economy settings, difficulty, toggles |
-| FTL: Faster Than Light | Trainer | Infinite fuel/scrap/missiles/drone parts, infinite power, invincible hull, infinite cloaking |
-| Balatro | Trainer | Infinite money |
+| FTL: Faster Than Light (v1.6.29) | Trainer | Infinite fuel/scrap/missiles/drone parts, infinite power, invincible hull, infinite cloaking |
+| Balatro (v1.0.1o) | Trainer | Infinite money |
 
-More games can be added by creating definition files — contributions welcome.
+More games can be added by creating definition files and plugins — contributions welcome.
 
 ## Building
 
@@ -43,7 +43,7 @@ flatpak run io.github.savesmith
 
 ### From source
 
-Requires Python 3.11+, GTK4, libadwaita, and the `cryptography` package.
+Requires Python 3.11+, GTK4, and libadwaita.
 
 ```bash
 python -m savesmith.main
@@ -53,16 +53,17 @@ python -m savesmith.main
 
 ```
 savesmith/
-  core/           # Engine: definitions, plugins, save I/O, signing, trainer
+  core/           # Engine: definitions, plugins, save I/O, trainer
   views/          # GTK4/libadwaita UI
 content/
   definitions/    # Game definition JSON files
   plugins/        # Format, search, and memory plugins
-  manifest.json   # Signed content manifest
-tools/            # Developer utilities (key generation, manifest signing)
+tools/            # Developer utilities
 ```
 
 ## Plugins
+
+Plugins are Python files dropped into the `plugins/` directory. Each plugin exposes a class with `id` and `type` attributes.
 
 ### Save Editor Plugins
 
@@ -78,15 +79,6 @@ tools/            # Developer utilities (key generation, manifest signing)
 | `memory_static` | Memory | Read/write values at a fixed offset from a module base address |
 | `memory_pointer_chain` | Memory | Follow multi-level pointer chains with fallback paths for optional subsystems |
 | `lua_inject` | Memory | Execute Lua code in LuaJIT/LÖVE games via GDB shellcode injection |
-
-### Security
-
-All downloadable content is verified before execution:
-
-- Content manifest is signed with Ed25519
-- Each file is checked against SHA256 hashes in the manifest
-- Plugins are re-verified on every launch
-- Downloads restricted to this repository only
 
 ## License
 

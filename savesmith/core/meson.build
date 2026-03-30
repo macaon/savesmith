@@ -7,7 +7,6 @@ core_sources = [
   'plugin_loader.py',
   'process.py',
   'save_file.py',
-  'signing.py',
   'trainer.py',
 ]
 

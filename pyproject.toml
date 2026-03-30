@@ -6,7 +6,6 @@ license = {text = "GPL-3.0-or-later"}
 requires-python = ">=3.11"
 dependencies = [
     "PyGObject",
-    "cryptography",
 ]
 
 [tool.ruff]
@@ -17,7 +16,6 @@ select = ["E", "F", "W", "I", "S", "B"]
 ignore = ["E402"]  # GTK apps must call gi.require_version before imports
 
 [tool.ruff.lint.per-file-ignores]
-"tools/*" = ["S"]  # Dev tools don't need security hardening
 "savesmith/core/process.py" = ["S603", "S607"]  # flatpak-spawn host portal
 "savesmith/core/memory.py" = ["S603", "S607"]  # flatpak-spawn host helper
 "content/plugins/lua_inject.py" = ["S603", "S607"]  # GDB + flatpak-spawn
