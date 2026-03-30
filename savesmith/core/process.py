@@ -34,7 +34,7 @@ for entry in os.listdir("/proc"):
         cmdline_str = cmdline.replace(b"\x00", b" ").decode("utf-8", "replace").strip()
         with open(f"/proc/{entry}/comm") as f:
             comm = f.read().strip()
-        if needle in comm.lower() or needle in cmdline_str.lower():
+        if comm.lower() == needle:
             results.append({"pid": pid, "name": comm, "cmdline": cmdline_str})
     except (PermissionError, FileNotFoundError, ProcessLookupError):
         continue
@@ -128,7 +128,7 @@ def _find_processes_native(name: str) -> list[ProcessInfo]:
             continue
         try:
             comm = (entry / "comm").read_text().strip()
-            if comm in ("python3", "bash", "sh", "flatpak-spawn"):
+            if comm.lower() != needle:
                 continue
             cmdline = (
                 (entry / "cmdline")
@@ -137,14 +137,13 @@ def _find_processes_native(name: str) -> list[ProcessInfo]:
                 .decode(errors="replace")
                 .strip()
             )
-            if needle in comm.lower() or needle in cmdline.lower():
-                results.append(
-                    ProcessInfo(
-                        pid=int(entry.name),
-                        name=comm,
-                        cmdline=cmdline,
-                    )
+            results.append(
+                ProcessInfo(
+                    pid=int(entry.name),
+                    name=comm,
+                    cmdline=cmdline,
                 )
+            )
         except (PermissionError, FileNotFoundError, ProcessLookupError):
             continue
 

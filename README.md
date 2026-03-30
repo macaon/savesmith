@@ -27,7 +27,7 @@ Trainers work both natively and inside the Flatpak sandbox via the `org.freedesk
 |------|------|--------|
 | Big Ambitions | Save Editor | Money, Energy, Hunger, Happiness, economy settings, difficulty, toggles |
 | FTL: Faster Than Light (v1.6.29) | Trainer | Infinite fuel/scrap/missiles/drone parts, infinite power, invincible hull, infinite cloaking |
-| Balatro (v1.0.1o) | Trainer | Infinite money |
+| Balatro (v1.0.1o) | Trainer | Infinite money/hands/discards, large hand size |
 
 More games can be added by creating definition files and plugins — contributions welcome.
 

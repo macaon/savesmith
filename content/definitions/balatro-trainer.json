@@ -8,7 +8,7 @@
   "game_version": "1.0.1o",
   "steam_buildid": "17459173",
   "poll_interval_ms": 500,
-  "description": "Trainer for Balatro (Proton, v1.0.1o). Uses Lua injection to execute code in the game's LuaJIT VM. The on_enable_lua hooks into love.update to continuously enforce values. on_disable_lua removes the hook.",
+  "description": "Trainer for Balatro (Proton, v1.0.1o). Uses Lua injection with love.update hooks for continuous enforcement. Each cheat installs a small hook on first enable, controlled by a flag for enable/disable.",
   "fields": [
     {
       "id": "infinite_money",
@@ -16,9 +16,39 @@
       "type": "patch",
       "widget": "switch",
       "category": "Resources",
-      "description": "Sets money to 999 and hooks love.update to maintain it every frame.",
-      "on_enable_lua": "G.GAME.dollars = 999; if not _ss then _ss = {} end; _ss.dollars = true; if not _ss.patched then _ss.patched = true; local _u = love.update; love.update = function(dt) if _ss.dollars then G.GAME.dollars = 999 end; return _u(dt) end end",
-      "on_disable_lua": "if _ss then _ss.dollars = false end"
+      "description": "Maintains money at 999 every frame.",
+      "on_enable_lua": "G.GAME.dollars=999; _ssM=true; if not _ssMP then _ssMP=true; local u=love.update; love.update=function(d) if _ssM then G.GAME.dollars=999 end; return u(d) end end",
+      "on_disable_lua": "_ssM=false"
+    },
+    {
+      "id": "infinite_hands",
+      "name": "Infinite Hands",
+      "type": "patch",
+      "widget": "switch",
+      "category": "Gameplay",
+      "description": "Maintains hands at 99 every frame.",
+      "on_enable_lua": "_ssH=true; if not _ssHP then _ssHP=true; local u=love.update; love.update=function(d) if _ssH and G.GAME.current_round then G.GAME.current_round.hands_left=99 end; return u(d) end end",
+      "on_disable_lua": "_ssH=false"
+    },
+    {
+      "id": "infinite_discards",
+      "name": "Infinite Discards",
+      "type": "patch",
+      "widget": "switch",
+      "category": "Gameplay",
+      "description": "Maintains discards at 99 every frame.",
+      "on_enable_lua": "_ssD=true; if not _ssDP then _ssDP=true; local u=love.update; love.update=function(d) if _ssD and G.GAME.current_round then G.GAME.current_round.discards_left=99 end; return u(d) end end",
+      "on_disable_lua": "_ssD=false"
+    },
+    {
+      "id": "big_hand",
+      "name": "Large Hand Size",
+      "type": "patch",
+      "widget": "switch",
+      "category": "Gameplay",
+      "description": "Increases hand size to 12 cards. Takes effect on next draw.",
+      "on_enable_lua": "if G.hand then G.hand.config.card_limit=12 end",
+      "on_disable_lua": "if G.hand then G.hand.config.card_limit=8 end"
     }
   ]
 }
