@@ -168,10 +168,10 @@
       },
       "patches": [
         {
-          "description": "NOP 'call Ship::DamageHull' + 'mov [rbx+0x618], eax' in ShipManager::DamageHull — hull damage is never applied",
-          "offset": "0xB7AE9",
-          "original": "E812A8FEFF898318060000",
-          "patch": "9090909090909090909090"
+          "description": "Replace Ship::DamageHull entry with 'mov eax,[rdi+0x70]; ret' — returns current hull without modifying, blocking all hull damage from any caller",
+          "offset": "0xA2300",
+          "original": "85F67E24",
+          "patch": "8B4770C3"
         }
       ]
     },
@@ -181,20 +181,20 @@
       "type": "patch",
       "widget": "switch",
       "category": "Ship",
-      "description": "NOPs the TimerHelper::Update() call in CloakingSystem::OnLoop so the cloak timer never advances. Once activated, cloaking lasts indefinitely. Requires cloaking system installed.",
+      "description": "Freezes the CloakingSystem timer to 0 so the cloak never expires. Requires cloaking system installed.",
+      "freeze_on_enable": true,
       "address": {
         "method": "memory_pointer_chain",
         "module": "FTL.amd64",
         "offset": "0x0"
       },
-      "patches": [
-        {
-          "description": "NOP 'call TimerHelper::Update' in CloakingSystem::OnLoop — cloak timer never ticks",
-          "offset": "0x23DD8B",
-          "original": "E88081F7FF",
-          "patch": "9090909090"
-        }
-      ]
+      "on_enable": {
+        "description": "Reset cloak timer to 0 via ShipManager -> CloakingSystem (+0x50) -> TimerHelper.current (+0x250)",
+        "chain": ["0x63A7F8", "0x10", "0x50", "0x250"],
+        "writes": [
+          {"offset": "0x0", "type": "float32", "value": 0.0}
+        ]
+      }
     }
   ]
 }
