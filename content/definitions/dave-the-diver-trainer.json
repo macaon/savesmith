@@ -73,6 +73,27 @@
           {"offset": "0x4", "type": "float32", "value": 99999.0}
         ]
       }
+    },
+    {
+      "id": "infinite_subs",
+      "name": "Infinite Subs",
+      "type": "patch",
+      "widget": "switch",
+      "category": "Diving",
+      "description": "Patches PlayerCharacter.get_IsDroneAvailable to always return true. Salvage subs can be called unlimited times per dive. Counter may show negative but subs remain available.",
+      "address": {
+        "method": "memory_pointer_chain",
+        "module": "GameAssembly.dll",
+        "offset": "0x0"
+      },
+      "patches": [
+        {
+          "description": "Replace drone availability check with 'mov al,1; ret' — always available",
+          "offset": "0x6E2270",
+          "original": "83B9D0010000000F9FC0C3",
+          "patch": "B001C39090909090909090"
+        }
+      ]
     }
   ]
 }
