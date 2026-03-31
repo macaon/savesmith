@@ -51,6 +51,28 @@
           "cave": "F30F10819C0000000F2FC87301C3"
         }
       ]
+    },
+    {
+      "id": "one_hit_kill",
+      "name": "One-Hit Kill",
+      "type": "patch",
+      "widget": "switch",
+      "category": "Combat",
+      "description": "Sets FishAISystem.cheatDamage to 99999 via the game's built-in static cheat field. All fish die in one hit from any weapon.",
+      "freeze_on_enable": true,
+      "address": {
+        "method": "memory_pointer_chain",
+        "module": "GameAssembly.dll",
+        "offset": "0x0"
+      },
+      "on_enable": {
+        "description": "Set cheatDamage.hasValue=1 via FishAISystem TypeInfo -> static_fields -> +0x8",
+        "chain": ["0x5C42378", "0xB8", "0x8"],
+        "writes": [
+          {"offset": "0x0", "type": "int32", "value": 1},
+          {"offset": "0x4", "type": "float32", "value": 99999.0}
+        ]
+      }
     }
   ]
 }

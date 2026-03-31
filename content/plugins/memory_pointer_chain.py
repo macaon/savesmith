@@ -9,19 +9,30 @@ class PointerChainMemory:
 
     _TYPE_FORMATS = {
         "float32": ("<f", 4),
-        "int32": ("<i", 4),
+        "float64": ("<d", 8),
+        "int8": ("<b", 1),
         "int16": ("<h", 2),
+        "int32": ("<i", 4),
+        "int64": ("<q", 8),
+        "uint8": ("<B", 1),
+        "uint16": ("<H", 2),
+        "uint32": ("<I", 4),
+        "uint64": ("<Q", 8),
         "bool": ("<?", 1),
     }
 
     def _resolve_chain(self, mem, base: int, chain: list[int]) -> int | None:
         """Follow a pointer chain to resolve the final address.
 
-        Given base and chain [0x10, 0x610]:
+        Each offset except the last is dereferenced as a 64-bit pointer.
+        The last offset is added without dereferencing (field offset).
+
+        Example with chain [0x10, 0x20, 0x30]:
           addr = read_ptr(base + 0x10)
-          final = addr + 0x610
-        The last offset is NOT dereferenced — it's the field offset.
-        Returns None if a null pointer is encountered.
+          addr = read_ptr(addr + 0x20)
+          final = addr + 0x30
+
+        Returns None if a null pointer is encountered mid-chain.
         """
         addr = base
         for offset in chain[:-1]:
@@ -48,11 +59,10 @@ class PointerChainMemory:
     def read_value(
         self, mem, base: int, offset: int, value_type: str,
         *, chain=None, fallback_chain=None
-    ) -> object:
+    ) -> object | None:
         """Read a typed value through a pointer chain.
 
-        If chain is provided, offset is ignored and the chain is followed
-        from base.  Otherwise falls back to simple base+offset.
+        Returns None if the chain hits a null pointer.
         """
         if value_type not in self._TYPE_FORMATS:
             raise ValueError(f"Unsupported value type: {value_type}")
@@ -82,8 +92,12 @@ class PointerChainMemory:
         if address is None:
             return
 
-        if value_type in ("int32", "int16"):
+        if value_type in ("int32", "int16", "int64", "int8"):
             value = int(value)
+        elif value_type in ("uint32", "uint16", "uint64", "uint8"):
+            value = int(value)
+        elif value_type in ("float32", "float64"):
+            value = float(value)
         elif value_type == "bool":
             value = bool(value)
 

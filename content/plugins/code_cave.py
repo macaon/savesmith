@@ -31,6 +31,13 @@ class CodeCave:
 
         Returns True on success.
         """
+        if len(original) < 5:
+            log.error(
+                "Stolen bytes too short for jmp32 at 0x%X (%d bytes)",
+                addr, len(original),
+            )
+            return False
+
         cave_base = self._find_rwx(pid, near=addr)
         if cave_base == 0:
             log.error("No rwx region within jmp32 range of 0x%X", addr)
@@ -76,9 +83,11 @@ class CodeCave:
         return True
 
     def uninstall(self, mem, addr: int, original: bytes) -> None:
-        """Restore original bytes at the patched address."""
+        """Restore original bytes and zero the cave."""
         mem.write(addr, original)
-        self._caves.pop(addr, None)
+        cave_addr = self._caves.pop(addr, None)
+        if cave_addr:
+            mem.write(cave_addr, b"\xCC" * 64)  # int3 fill
 
     def _find_rwx(self, pid: int, near: int) -> int:
         """Find an rwx region within jmp32 range of near."""
