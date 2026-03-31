@@ -1,0 +1,62 @@
+{
+  "id": "dave-the-diver-trainer",
+  "name": "Dave the Diver",
+  "version": 1,
+  "mode": "trainer",
+  "requires": ["memory_pointer_chain"],
+  "process_name": "DaveTheDiver.ex",
+  "game_version": "1.0.5.1791",
+  "steam_buildid": "",
+  "poll_interval_ms": 500,
+  "description": "Trainer for Dave the Diver (Proton, Unity IL2CPP). Oxygen patch is in PlayerBreathHandler's set method in GameAssembly.dll.",
+  "fields": [
+    {
+      "id": "infinite_oxygen",
+      "name": "Infinite Oxygen",
+      "type": "patch",
+      "widget": "switch",
+      "category": "Diving",
+      "description": "NOPs PlayerBreathHandler.BreathUpdate so oxygen never decreases while diving.",
+      "address": {
+        "method": "memory_pointer_chain",
+        "module": "GameAssembly.dll",
+        "offset": "0x0"
+      },
+      "patches": [
+        {
+          "description": "Replace 'push rdi' with 'ret; nop' at PlayerBreathHandler.BreathUpdate — breath consumption skipped",
+          "offset": "0xDD5B00",
+          "original": "4057",
+          "patch": "C390"
+        }
+      ]
+    },
+    {
+      "id": "invincible",
+      "name": "Invincible",
+      "type": "patch",
+      "widget": "switch",
+      "category": "Diving",
+      "description": "NOPs PlayerBreathHandler.HPUpdate so HP never decreases from depth pressure or enemies.",
+      "address": {
+        "method": "memory_pointer_chain",
+        "module": "GameAssembly.dll",
+        "offset": "0x0"
+      },
+      "patches": [
+        {
+          "description": "Replace 'push rbx' with 'ret; nop' at PlayerBreathHandler.HPUpdate — depth/pressure HP damage skipped",
+          "offset": "0xDD69D0",
+          "original": "4053",
+          "patch": "C390"
+        },
+        {
+          "description": "Replace 'mov' with 'ret; nop' at PlayerBreathHandler.SetHitHP — direct hit damage skipped",
+          "offset": "0xDD81C0",
+          "original": "4889",
+          "patch": "C390"
+        }
+      ]
+    }
+  ]
+}

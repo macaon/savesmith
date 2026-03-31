@@ -1,0 +1,54 @@
+{
+  "id": "dave-the-diver",
+  "name": "Dave the Diver",
+  "version": 1,
+  "requires": ["format_xor_gamedata", "search_json"],
+  "save_format": {
+    "pipeline": ["format_xor_gamedata"]
+  },
+  "save_glob": "**/*_GD.sav",
+  "fields": [
+    {
+      "id": "gold",
+      "name": "Gold",
+      "type": "int32",
+      "widget": "spin",
+      "category": "Player",
+      "min": 0,
+      "max": 9999999,
+      "step": 100,
+      "search": {
+        "method": "search_json",
+        "json_path": "PlayerInfo.m_Gold"
+      }
+    },
+    {
+      "id": "bei",
+      "name": "Bei",
+      "type": "int32",
+      "widget": "spin",
+      "category": "Player",
+      "min": 0,
+      "max": 9999999,
+      "step": 100,
+      "search": {
+        "method": "search_json",
+        "json_path": "PlayerInfo.m_Bei"
+      }
+    },
+    {
+      "id": "research_points",
+      "name": "Research Points",
+      "type": "int32",
+      "widget": "spin",
+      "category": "Player",
+      "min": 0,
+      "max": 9999999,
+      "step": 10,
+      "search": {
+        "method": "search_json",
+        "json_path": "PlayerInfo.m_researchPoint"
+      }
+    }
+  ]
+}
