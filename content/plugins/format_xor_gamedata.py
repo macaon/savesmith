@@ -1,4 +1,4 @@
-"""XOR format plugin for Dave the Diver save files (key: GameData)."""
+"""XOR format plugin with repeating key 'GameData'."""
 
 
 class XorGameData:
