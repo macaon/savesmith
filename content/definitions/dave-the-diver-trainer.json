@@ -94,6 +94,27 @@
           "patch": "B001C39090909090909090"
         }
       ]
+    },
+    {
+      "id": "no_overweight",
+      "name": "No Overweight",
+      "type": "patch",
+      "widget": "switch",
+      "category": "Diving",
+      "description": "No speed penalty from heavy inventory. Carry as much as you want.",
+      "address": {
+        "method": "memory_pointer_chain",
+        "module": "GameAssembly.dll",
+        "offset": "0x0"
+      },
+      "patches": [
+        {
+          "description": "Patch OverweightProperty.GetDebuff to return null — no debuff applied",
+          "offset": "0x1212550",
+          "original": "4053",
+          "patch": "31C0C3"
+        }
+      ]
     }
   ]
 }
