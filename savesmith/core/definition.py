@@ -143,6 +143,7 @@ class TrainerFieldDef:
     widget: str  # "spin", "switch", "entry"
     address: FieldAddress | None = None
     category: str = "General"
+    description: str = ""
     freezable: bool = False
     min: float | None = None
     max: float | None = None
@@ -264,6 +265,7 @@ class TrainerDefinition:
                     widget=f["widget"],
                     address=address,
                     category=f.get("category", "General"),
+                    description=f.get("description", ""),
                     freezable=f.get("freezable", False),
                     min=f.get("min"),
                     max=f.get("max"),

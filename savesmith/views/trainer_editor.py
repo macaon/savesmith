@@ -290,9 +290,11 @@ class TrainerEditorPage(Adw.NavigationPage):
     ) -> Adw.SwitchRow:
         row = Adw.SwitchRow(
             title=fv.field.name,
-            subtitle=getattr(fv.field, "description", ""),
             active=bool(fv.current_value),
         )
+        desc = getattr(fv.field, "description", "")
+        if desc:
+            row.set_subtitle(desc)
         sig = row.connect(
             "notify::active", self._on_patch_toggled, fv.field.id
         )
