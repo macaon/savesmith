@@ -6,9 +6,8 @@
   "requires": ["memory_pointer_chain"],
   "process_name": "DaveTheDiver.ex",
   "game_version": "1.0.5.1791",
-  "steam_buildid": "",
   "poll_interval_ms": 500,
-  "description": "Trainer for Dave the Diver (Proton, Unity IL2CPP). Oxygen patch is in PlayerBreathHandler's set method in GameAssembly.dll.",
+  "description": "Trainer for Dave the Diver (Proton, Unity IL2CPP). Class layout from Il2CppDumper. Patches target PlayerBreathHandler methods in GameAssembly.dll.",
   "fields": [
     {
       "id": "infinite_oxygen",
@@ -37,7 +36,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Diving",
-      "description": "NOPs PlayerBreathHandler.HPUpdate so HP never decreases from depth pressure or enemies.",
+      "description": "Patches PlayerBreathHandler.set_HP to only accept values >= current HP. Damage is blocked but healing and oxygen pickups still work.",
       "address": {
         "method": "memory_pointer_chain",
         "module": "GameAssembly.dll",
@@ -45,16 +44,10 @@
       },
       "patches": [
         {
-          "description": "Replace 'push rbx' with 'ret; nop' at PlayerBreathHandler.HPUpdate — depth/pressure HP damage skipped",
-          "offset": "0xDD69D0",
-          "original": "4053",
-          "patch": "C390"
-        },
-        {
-          "description": "Replace 'mov' with 'ret; nop' at PlayerBreathHandler.SetHitHP — direct hit damage skipped",
-          "offset": "0xDD81C0",
-          "original": "4889",
-          "patch": "C390"
+          "description": "Replace set_HP entry with: load current HP, compare with new value, return if new < current. Blocks all HP decreases while allowing increases.",
+          "offset": "0xDD8B90",
+          "original": "40534883EC300F2974242033D20F",
+          "patch": "F30F10819C0000000F2FC87301C3"
         }
       ]
     }
