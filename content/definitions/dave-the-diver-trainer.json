@@ -3,7 +3,7 @@
   "name": "Dave the Diver",
   "version": 1,
   "mode": "trainer",
-  "requires": ["memory_pointer_chain"],
+  "requires": ["memory_pointer_chain", "code_cave"],
   "process_name": "DaveTheDiver.ex",
   "game_version": "1.0.5.1791",
   "poll_interval_ms": 500,
@@ -36,7 +36,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Diving",
-      "description": "Patches PlayerBreathHandler.set_HP to only accept values >= current HP. Damage is blocked but healing and oxygen pickups still work.",
+      "description": "Installs a code cave on set_HP that blocks damage (value decreases) while allowing healing (value increases). Oxygen barrels and healing still work.",
       "address": {
         "method": "memory_pointer_chain",
         "module": "GameAssembly.dll",
@@ -44,10 +44,11 @@
       },
       "patches": [
         {
-          "description": "Replace set_HP entry with: load current HP, compare with new value, return if new < current. Blocks all HP decreases while allowing increases.",
+          "description": "Code cave on PlayerBreathHandler.set_HP: load current HP, compare with new value, return if damage. Stolen bytes: push rbx; sub rsp,0x30; movaps [rsp+0x20],xmm6; xor edx,edx",
           "offset": "0xDD8B90",
-          "original": "40534883EC300F2974242033D20F",
-          "patch": "F30F10819C0000000F2FC87301C3"
+          "original": "40534883EC300F2974242033D2",
+          "patch": "C390",
+          "cave": "F30F10819C0000000F2FC87301C3"
         }
       ]
     }

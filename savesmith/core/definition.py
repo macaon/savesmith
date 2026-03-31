@@ -113,6 +113,7 @@ class CodePatch:
     offset: int  # Offset from module base
     original: bytes  # Expected original bytes (for verification + restore)
     patch: bytes  # Replacement bytes
+    cave: bytes = b""  # Shellcode guard; original becomes stolen bytes
 
 
 @dataclass(frozen=True)
@@ -206,6 +207,7 @@ class TrainerDefinition:
                     else p["offset"],
                     original=bytes.fromhex(p["original"]),
                     patch=bytes.fromhex(p["patch"]),
+                    cave=bytes.fromhex(p.get("cave", "")),
                 )
                 for p in f.get("patches", [])
             )

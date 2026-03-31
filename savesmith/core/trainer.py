@@ -244,6 +244,16 @@ class TrainerEditor:
                 "on_enable write: 0x%X = %r", base + w.offset, w.value
             )
 
+    def _apply_cave_patch(self, addr: int, cp) -> None:
+        """Install a code cave via the code_cave plugin."""
+        cave_plugin = self._memory_plugins.get("code_cave")
+        if cave_plugin is None:
+            log.error("code_cave plugin not loaded")
+            return
+        cave_plugin.install(
+            self._mem, self._pid, addr, cp.original, cp.cave
+        )
+
     def toggle_patch(self, field_id: str, enable: bool) -> None:
         """Apply or restore code patches for a patch field."""
         for fv in self._field_values:
@@ -258,19 +268,42 @@ class TrainerEditor:
                     if enable:
                         # Verify original bytes before patching
                         current = self._mem.read(addr, len(cp.original))
-                        if current != cp.original and current != cp.patch:
-                            log.error(
-                                "Patch %s: unexpected bytes at 0x%X: "
-                                "%s (expected %s)",
-                                field_id,
-                                addr,
-                                current.hex(),
-                                cp.original.hex(),
-                            )
-                            return
-                        self._mem.write(addr, cp.patch)
+                        if current != cp.original:
+                            # Check if already patched
+                            if cp.cave:
+                                # Cave patch: check for jmp
+                                if current[0] != 0xE9:
+                                    log.error(
+                                        "Patch %s: unexpected bytes "
+                                        "at 0x%X: %s",
+                                        field_id, addr,
+                                        current.hex(),
+                                    )
+                                    return
+                                else:
+                                    continue  # already applied
+                            elif current != cp.patch:
+                                log.error(
+                                    "Patch %s: unexpected bytes "
+                                    "at 0x%X: %s (expected %s)",
+                                    field_id, addr,
+                                    current.hex(),
+                                    cp.original.hex(),
+                                )
+                                return
+                            else:
+                                continue  # already applied
+
+                        if cp.cave:
+                            self._apply_cave_patch(addr, cp)
+                        else:
+                            self._mem.write(addr, cp.patch)
                     else:
-                        self._mem.write(addr, cp.original)
+                        if cp.cave:
+                            # Restore stolen bytes
+                            self._mem.write(addr, cp.original)
+                        else:
+                            self._mem.write(addr, cp.original)
 
                 # Run on_enable writes
                 if enable and fv.field.on_enable:

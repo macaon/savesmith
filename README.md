@@ -81,6 +81,7 @@ Plugins are Python files dropped into the `plugins/` directory. Each plugin expo
 | `memory_static` | Memory | Read/write values at a fixed offset from a module base address |
 | `memory_pointer_chain` | Memory | Follow multi-level pointer chains with fallback paths for optional subsystems |
 | `lua_inject` | Memory | Execute Lua code in LuaJIT/LÖVE games via GDB shellcode injection |
+| `code_cave` | Memory | Install guarded patches via rwx trampolines for conditional code modification |
 
 ## License
 
