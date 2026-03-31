@@ -29,7 +29,7 @@ Trainers work both natively and inside the Flatpak sandbox via the `org.freedesk
 | FTL: Faster Than Light (v1.6.29) | Trainer | Infinite fuel/scrap/missiles/drone parts, infinite power, invincible hull, infinite cloaking |
 | Balatro (v1.0.1o) | Trainer | Infinite money/hands/discards, large hand size |
 | Dave the Diver (v1.0.5.1791) | Save Editor | Gold, Bei, Research Points |
-| Dave the Diver (v1.0.5.1791) | Trainer | Infinite oxygen, invincible |
+| Dave the Diver (v1.0.5.1791) | Trainer | Infinite oxygen, invincible, one-hit kill, infinite subs, no overweight |
 
 More games can be added by creating definition files and plugins — contributions welcome.
 
