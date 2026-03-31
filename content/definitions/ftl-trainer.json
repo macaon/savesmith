@@ -3,7 +3,9 @@
   "name": "FTL: Faster Than Light",
   "version": 1,
   "mode": "trainer",
-  "requires": ["memory_pointer_chain"],
+  "requires": [
+    "memory_pointer_chain"
+  ],
   "process_name": "FTL.amd64",
   "game_version": "1.6.29",
   "steam_buildid": "4710954",
@@ -16,7 +18,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Resources",
-      "description": "Freezes fuel at 99 by rewriting every poll tick.",
+      "description": "Fuel stays at 99",
       "freeze_on_enable": true,
       "address": {
         "method": "memory_pointer_chain",
@@ -25,9 +27,17 @@
       },
       "on_enable": {
         "description": "Set fuel to 99 via ShipManager->fuel (+0x610)",
-        "chain": ["0x63A7F8", "0x10", "0x610"],
+        "chain": [
+          "0x63A7F8",
+          "0x10",
+          "0x610"
+        ],
         "writes": [
-          {"offset": "0x0", "type": "int32", "value": 99}
+          {
+            "offset": "0x0",
+            "type": "int32",
+            "value": 99
+          }
         ]
       }
     },
@@ -37,7 +47,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Resources",
-      "description": "Freezes missiles at 99 by rewriting every poll tick. Writes to both the WeaponControl path and ShipManager fallback.",
+      "description": "Missiles stay at 99",
       "freeze_on_enable": true,
       "address": {
         "method": "memory_pointer_chain",
@@ -46,16 +56,33 @@
       },
       "on_enable": {
         "description": "Set missiles to 99 via ShipManager fallback (+0x8F4)",
-        "chain": ["0x63A7F8", "0x10", "0x8F4"],
+        "chain": [
+          "0x63A7F8",
+          "0x10",
+          "0x8F4"
+        ],
         "writes": [
-          {"offset": "0x0", "type": "int32", "value": 99}
+          {
+            "offset": "0x0",
+            "type": "int32",
+            "value": 99
+          }
         ]
       },
       "on_enable_alt": {
         "description": "Set missiles to 99 via WeaponControl (+0x88) -> +0x288",
-        "chain": ["0x63A7F8", "0x10", "0x88", "0x288"],
+        "chain": [
+          "0x63A7F8",
+          "0x10",
+          "0x88",
+          "0x288"
+        ],
         "writes": [
-          {"offset": "0x0", "type": "int32", "value": 99}
+          {
+            "offset": "0x0",
+            "type": "int32",
+            "value": 99
+          }
         ]
       }
     },
@@ -65,7 +92,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Resources",
-      "description": "Freezes drone parts at 99 by rewriting every poll tick. Writes to both the DroneControl path and ShipManager fallback.",
+      "description": "Drone parts stay at 99",
       "freeze_on_enable": true,
       "address": {
         "method": "memory_pointer_chain",
@@ -74,16 +101,33 @@
       },
       "on_enable": {
         "description": "Set drone parts to 99 via ShipManager fallback (+0x8F0)",
-        "chain": ["0x63A7F8", "0x10", "0x8F0"],
+        "chain": [
+          "0x63A7F8",
+          "0x10",
+          "0x8F0"
+        ],
         "writes": [
-          {"offset": "0x0", "type": "int32", "value": 99}
+          {
+            "offset": "0x0",
+            "type": "int32",
+            "value": 99
+          }
         ]
       },
       "on_enable_alt": {
         "description": "Set drone parts to 99 via DroneControl (+0x90) -> +0x260",
-        "chain": ["0x63A7F8", "0x10", "0x90", "0x260"],
+        "chain": [
+          "0x63A7F8",
+          "0x10",
+          "0x90",
+          "0x260"
+        ],
         "writes": [
-          {"offset": "0x0", "type": "int32", "value": 99}
+          {
+            "offset": "0x0",
+            "type": "int32",
+            "value": 99
+          }
         ]
       }
     },
@@ -93,7 +137,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Resources",
-      "description": "Freezes scrap at 99999 by rewriting every poll tick.",
+      "description": "Scrap stays at 99999",
       "freeze_on_enable": true,
       "address": {
         "method": "memory_pointer_chain",
@@ -102,9 +146,17 @@
       },
       "on_enable": {
         "description": "Set scrap to 99999 via ShipManager->scrap (+0x670)",
-        "chain": ["0x63A7F8", "0x10", "0x670"],
+        "chain": [
+          "0x63A7F8",
+          "0x10",
+          "0x670"
+        ],
         "writes": [
-          {"offset": "0x0", "type": "int32", "value": 99999}
+          {
+            "offset": "0x0",
+            "type": "int32",
+            "value": 99999
+          }
         ]
       }
     },
@@ -114,7 +166,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Ship",
-      "description": "NOPs the reactor power deduction in PowerManager::IncreasePower and DecreasePower so the reactor always shows full. Sets reactor to 30 bars on enable.",
+      "description": "Reactor always full. Freely allocate power to all systems.",
       "address": {
         "method": "memory_pointer_chain",
         "module": "FTL.amd64",
@@ -122,27 +174,38 @@
       },
       "on_enable": {
         "description": "Set reactor to full (used=0, total=30) via PowerManager::powerManagers[0]",
-        "chain": ["0x647C70", "0x0"],
+        "chain": [
+          "0x647C70",
+          "0x0"
+        ],
         "writes": [
-          {"offset": "0x0", "type": "int32", "value": 0},
-          {"offset": "0x4", "type": "int32", "value": 30}
+          {
+            "offset": "0x0",
+            "type": "int32",
+            "value": 0
+          },
+          {
+            "offset": "0x4",
+            "type": "int32",
+            "value": 30
+          }
         ]
       },
       "patches": [
         {
-          "description": "NOP 'add [rdi], 1' in IncreasePower — stops used_power from incrementing when powering a system",
+          "description": "NOP 'add [rdi], 1' in IncreasePower \u2014 stops used_power from incrementing when powering a system",
           "offset": "0x244CDB",
           "original": "830701",
           "patch": "909090"
         },
         {
-          "description": "NOP 'jl' availability check in IncreasePower — allows allocation even when reactor shows no free bars",
+          "description": "NOP 'jl' availability check in IncreasePower \u2014 allows allocation even when reactor shows no free bars",
           "offset": "0x244CBC",
           "original": "7C72",
           "patch": "9090"
         },
         {
-          "description": "NOP 'sub [rdi], 1' in DecreasePower — stops used_power from decrementing when depowering a system",
+          "description": "NOP 'sub [rdi], 1' in DecreasePower \u2014 stops used_power from decrementing when depowering a system",
           "offset": "0x244C3A",
           "original": "832F01",
           "patch": "909090"
@@ -155,7 +218,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Ship",
-      "description": "NOPs the call to Ship::DamageHull and the hull value store in ShipManager::DamageHull, so the ship never takes hull damage. Sets hull to max (30) on enable.",
+      "description": "Ship takes no hull damage. Hull set to max on enable.",
       "address": {
         "method": "memory_pointer_chain",
         "module": "FTL.amd64",
@@ -163,14 +226,22 @@
       },
       "on_enable": {
         "description": "Set hull to max (30) via ShipManager -> Ship.hull (+0x188)",
-        "chain": ["0x63A7F8", "0x10", "0x188"],
+        "chain": [
+          "0x63A7F8",
+          "0x10",
+          "0x188"
+        ],
         "writes": [
-          {"offset": "0x0", "type": "int32", "value": 30}
+          {
+            "offset": "0x0",
+            "type": "int32",
+            "value": 30
+          }
         ]
       },
       "patches": [
         {
-          "description": "Replace Ship::DamageHull entry with 'mov eax,[rdi+0x70]; ret' — returns current hull without modifying, blocking all hull damage from any caller",
+          "description": "Replace Ship::DamageHull entry with 'mov eax,[rdi+0x70]; ret' \u2014 returns current hull without modifying, blocking all hull damage from any caller",
           "offset": "0xA2300",
           "original": "85F67E24",
           "patch": "8B4770C3"
@@ -183,7 +254,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Ship",
-      "description": "Freezes the CloakingSystem timer to 0 so the cloak never expires. Requires cloaking system installed.",
+      "description": "Cloak never expires once activated",
       "freeze_on_enable": true,
       "address": {
         "method": "memory_pointer_chain",
@@ -192,9 +263,18 @@
       },
       "on_enable": {
         "description": "Reset cloak timer to 0 via ShipManager -> CloakingSystem (+0x50) -> TimerHelper.current (+0x250)",
-        "chain": ["0x63A7F8", "0x10", "0x50", "0x250"],
+        "chain": [
+          "0x63A7F8",
+          "0x10",
+          "0x50",
+          "0x250"
+        ],
         "writes": [
-          {"offset": "0x0", "type": "float32", "value": 0.0}
+          {
+            "offset": "0x0",
+            "type": "float32",
+            "value": 0.0
+          }
         ]
       }
     }

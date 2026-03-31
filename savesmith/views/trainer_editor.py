@@ -290,6 +290,7 @@ class TrainerEditorPage(Adw.NavigationPage):
     ) -> Adw.SwitchRow:
         row = Adw.SwitchRow(
             title=fv.field.name,
+            subtitle=getattr(fv.field, "description", ""),
             active=bool(fv.current_value),
         )
         sig = row.connect(

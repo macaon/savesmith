@@ -3,7 +3,9 @@
   "name": "Balatro",
   "version": 1,
   "mode": "trainer",
-  "requires": ["lua_inject"],
+  "requires": [
+    "lua_inject"
+  ],
   "process_name": "Balatro.exe",
   "game_version": "1.0.1o",
   "steam_buildid": "17459173",
@@ -16,7 +18,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Resources",
-      "description": "Maintains money at 999 every frame.",
+      "description": "Money stays at 999",
       "on_enable_lua": "G.GAME.dollars=999; _ssM=true; if not _ssMP then _ssMP=true; local u=love.update; love.update=function(d) if _ssM then G.GAME.dollars=999 end; return u(d) end end",
       "on_disable_lua": "_ssM=false"
     },
@@ -26,7 +28,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Gameplay",
-      "description": "Maintains hands at 99 every frame.",
+      "description": "Hands per round stay at 99",
       "on_enable_lua": "_ssH=true; if not _ssHP then _ssHP=true; local u=love.update; love.update=function(d) if _ssH and G.GAME.current_round then G.GAME.current_round.hands_left=99 end; return u(d) end end",
       "on_disable_lua": "_ssH=false"
     },
@@ -36,7 +38,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Gameplay",
-      "description": "Maintains discards at 99 every frame.",
+      "description": "Discards per round stay at 99",
       "on_enable_lua": "_ssD=true; if not _ssDP then _ssDP=true; local u=love.update; love.update=function(d) if _ssD and G.GAME.current_round then G.GAME.current_round.discards_left=99 end; return u(d) end end",
       "on_disable_lua": "_ssD=false"
     },
@@ -46,7 +48,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Gameplay",
-      "description": "Increases hand size to 12 cards. Takes effect on next draw.",
+      "description": "Hold 12 cards instead of 8",
       "on_enable_lua": "if G.hand then G.hand.config.card_limit=12 end",
       "on_disable_lua": "if G.hand then G.hand.config.card_limit=8 end"
     }

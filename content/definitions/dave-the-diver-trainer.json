@@ -15,7 +15,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Diving",
-      "description": "NOPs PlayerBreathHandler.BreathUpdate so oxygen never decreases while diving.",
+      "description": "Oxygen never decreases while diving",
       "address": {
         "method": "memory_pointer_chain",
         "module": "GameAssembly.dll",
@@ -23,7 +23,7 @@
       },
       "patches": [
         {
-          "description": "Replace 'push rdi' with 'ret; nop' at PlayerBreathHandler.BreathUpdate — breath consumption skipped",
+          "description": "NOP PlayerBreathHandler.BreathUpdate",
           "offset": "0xDD5B00",
           "original": "4057",
           "patch": "C390"
@@ -36,7 +36,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Diving",
-      "description": "Installs a code cave on set_HP that blocks damage (value decreases) while allowing healing (value increases). Oxygen barrels and healing still work.",
+      "description": "Blocks all damage. Healing and oxygen barrels still work.",
       "address": {
         "method": "memory_pointer_chain",
         "module": "GameAssembly.dll",
@@ -44,7 +44,7 @@
       },
       "patches": [
         {
-          "description": "Code cave on PlayerBreathHandler.set_HP: load current HP, compare with new value, return if damage. Stolen bytes: push rbx; sub rsp,0x30; movaps [rsp+0x20],xmm6; xor edx,edx",
+          "description": "Code cave on set_HP: reject decreases, allow increases",
           "offset": "0xDD8B90",
           "original": "40534883EC300F2974242033D2",
           "patch": "C390",
@@ -58,7 +58,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Combat",
-      "description": "Sets FishAISystem.cheatDamage to 99999 via the game's built-in static cheat field. All fish die in one hit from any weapon.",
+      "description": "All fish die in one hit from any weapon",
       "freeze_on_enable": true,
       "address": {
         "method": "memory_pointer_chain",
@@ -66,7 +66,7 @@
         "offset": "0x0"
       },
       "on_enable": {
-        "description": "Set cheatDamage.hasValue=1 via FishAISystem TypeInfo -> static_fields -> +0x8",
+        "description": "Set cheatDamage to 99999",
         "chain": ["0x5C42378", "0xB8", "0x8"],
         "writes": [
           {"offset": "0x0", "type": "int32", "value": 1},
@@ -80,7 +80,7 @@
       "type": "patch",
       "widget": "switch",
       "category": "Diving",
-      "description": "Patches PlayerCharacter.get_IsDroneAvailable to always return true. Salvage subs can be called unlimited times per dive. Counter may show negative but subs remain available.",
+      "description": "Unlimited salvage sub calls. Counter may go negative.",
       "address": {
         "method": "memory_pointer_chain",
         "module": "GameAssembly.dll",
@@ -88,7 +88,7 @@
       },
       "patches": [
         {
-          "description": "Replace drone availability check with 'mov al,1; ret' — always available",
+          "description": "Patch get_IsDroneAvailable to always return true",
           "offset": "0x6E2270",
           "original": "83B9D0010000000F9FC0C3",
           "patch": "B001C39090909090909090"
