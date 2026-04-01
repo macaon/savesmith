@@ -17,6 +17,7 @@ Attach to a running game and modify values in real time. Trainers support:
 - **Live memory reading** — poll game state and display current values
 - **Value freezing** — continuously write a value to keep it locked
 - **Code patching** — NOP or modify game instructions (e.g. disable damage, infinite power)
+- **Code caves** — inject guarded patches that conditionally modify behavior (e.g. block damage but allow healing)
 - **Lua injection** — execute Lua code inside LuaJIT/LÖVE games via GDB-driven shellcode
 
 Trainers work both natively and inside the Flatpak sandbox via the `org.freedesktop.Flatpak` host portal.
@@ -72,7 +73,9 @@ Plugins are Python files dropped into the `plugins/` directory. Each plugin expo
 | Plugin | Type | Description |
 |--------|------|-------------|
 | `format_gzip` | Format | Gzip compression/decompression for save files |
+| `format_xor_gamedata` | Format | XOR decryption/encryption with repeating key |
 | `search_utf16le` | Search | Find and read/write values by UTF-16LE field name in .NET binary data |
+| `search_json` | Search | Read/write values by dotted JSON path (e.g. `PlayerInfo.m_Gold`) |
 
 ### Trainer Plugins
 
@@ -81,7 +84,7 @@ Plugins are Python files dropped into the `plugins/` directory. Each plugin expo
 | `memory_static` | Memory | Read/write values at a fixed offset from a module base address |
 | `memory_pointer_chain` | Memory | Follow multi-level pointer chains with fallback paths for optional subsystems |
 | `lua_inject` | Memory | Execute Lua code in LuaJIT/LÖVE games via GDB shellcode injection |
-| `code_cave` | Memory | Install guarded patches via rwx trampolines for conditional code modification |
+| `code_cave` | Memory | Install guarded code caves in rwx memory for conditional patches (e.g. block damage but allow healing) |
 
 ## License
 
